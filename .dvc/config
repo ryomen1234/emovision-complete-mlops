@@ -1,1 +1,5 @@
-
+[core]
+    remote = s3remote
+['remote "s3remote"']
+    url = s3://emovision-mlops-complete
+    region = ap-south-1
