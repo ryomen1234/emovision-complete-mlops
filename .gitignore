@@ -3,3 +3,4 @@ data/processed
 myenv
 !data/*.dvc
 !data/**/*.dvc
+dvc-user_accessKeys.csv
