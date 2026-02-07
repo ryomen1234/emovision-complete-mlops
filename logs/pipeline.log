@@ -18,3 +18,11 @@
 [2026-02-07 14:25:23,715] INFO | src.data.validate | Validating split: train
 [2026-02-07 14:25:23,858] INFO | src.data.validate | Validating split: test
 [2026-02-07 14:25:23,880] INFO | src.data.validate | Data validation completed successfully
+[2026-02-07 22:05:41,787] INFO | src.models.train | Using device: cpu
+[2026-02-07 22:05:41,787] INFO | src.models.train | Training started.
+[2026-02-07 22:05:41,788] INFO | src.features.dataloader | Initializing dataloaders
+[2026-02-07 22:05:41,788] INFO | src.features.dataloader | Processed data directory: data\processed
+[2026-02-07 22:05:41,788] INFO | src.features.dataloader | Batch size: 32
+[2026-02-07 22:05:42,115] INFO | src.features.dataloader | Train samples: 28709
+[2026-02-07 22:05:42,115] INFO | src.features.dataloader | Test samples: 7178
+[2026-02-07 22:05:42,116] INFO | src.features.dataloader | Dataloaders created successfully

@@ -20,15 +20,17 @@ def train(
     lr=1e-3,
     model_dir=Path("artifacts"),
 ):
-
+   
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     logger.info(f"Using device: {device}")
+    logger.info("Training started.")
+    print("Training started")
 
     train_loader, _ = get_dataloader(
         processed_data_dir,
         batch_size=batch_size
     )
-
+    
     num_classes = len(train_loader.dataset.class_to_idx)
     model = SimpleCNN(num_classes).to(device)
 

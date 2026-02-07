@@ -1,17 +1,19 @@
 from pathlib import Path
-from torch.utils.data import DataLoader
+from torch.utils.data import DataLoader, Subset
 from src.features.transforms import get_transform
 from src.features.dataset import EmovisionDataset
 from src.utils.logger import get_logger
 
 logger = get_logger(__name__)
 
-def get_dataloader(processed_data_dir: Path, batch_size: int = 32):
 
-    logger.info("Initializing dataloaders")
-    logger.info(f"Processed data directory: {processed_data_dir}")
-    logger.info(f"Batch size: {batch_size}")
+import random
 
+def get_dataloaders(
+    processed_data_dir: Path,
+    batch_size=32,
+    train_fraction=1.0   
+):
     train_dataset = EmovisionDataset(
         processed_data_dir / "train",
         transform=get_transform(train=True)
@@ -22,25 +24,27 @@ def get_dataloader(processed_data_dir: Path, batch_size: int = 32):
         transform=get_transform(train=False)
     )
 
-    logger.info(f"Train samples: {len(train_dataset)}")
-    logger.info(f"Test samples: {len(test_dataset)}")
+    # 🔽 Use only a fraction of training data
+    if train_fraction < 1.0:
+        total_size = len(train_dataset)
+        subset_size = int(total_size * train_fraction)
+
+        indices = random.sample(range(total_size), subset_size)
+        train_dataset = Subset(train_dataset, indices)
 
     train_loader = DataLoader(
         train_dataset,
         batch_size=batch_size,
         shuffle=True,
         num_workers=2,
-        pin_memory=True
+        
     )
 
     test_loader = DataLoader(
         test_dataset,
         batch_size=batch_size,
         shuffle=False,
-        num_workers=2,
-        pin_memory=True
+        num_workers=2
     )
-
-    logger.info("Dataloaders created successfully")
 
     return train_loader, test_loader
