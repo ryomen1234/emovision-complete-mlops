@@ -1,29 +1,31 @@
-import torch
-import torch.nn as nn 
+import torch 
+import torch.nn as nn
 
+class SimpleCNN(nn.Module):
 
-class Model_0(nn.Module):
-
-    def __init__(self, output: int):
+    def __init__(self, num_classes: int):
         super().__init__()
 
         self.features = nn.Sequential(
-            nn.Conv2d(in_channels=3, out_channels=16, padding=1, kernel_size=3, stride=1),
+            nn.Conv2d(3, 16, kernel_size=3, padding=1),
             nn.ReLU(),
-            nn.MaxPool2d(kernel_size=3),
+            nn.MaxPool2d(2),
 
-            nn.Conv2d(in_channels=16, out_channels=32, stride=1, kernel_size=3, padding=1),
+            nn.Conv2d(16, 32, kernel_size=3, padding=1),
             nn.ReLU(),
-            nn.MaxPool2d(kernel_size=3)
+            nn.MaxPool2d(2),
         )
+
+        self.pool = nn.AdaptiveAvgPool2d((1, 1))
 
         self.classifier = nn.Sequential(
             nn.Flatten(),
-            nn.Linear(32*24*24, 64),
+            nn.Linear(32, 64),
             nn.ReLU(),
-            nn.Linear(64, output)
+            nn.Linear(64, num_classes),
         )
 
     def forward(self, x):
         x = self.features(x)
+        x = self.pool(x)
         return self.classifier(x)

@@ -1,8 +1,8 @@
 from pathlib import Path
-from src.models.train import _train
+from src.models.train import train
 
 if __name__ == "__main__":
-    _train(
+    train(
         processed_data_dir=Path("data/processed"),
         epochs=5,
         batch_size=32,

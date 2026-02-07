@@ -3,3 +3,4 @@
 ['remote "s3remote"']
     url = s3://harshal-vision-data-bucket
     region = eu-north-1
+    jobs = 2
